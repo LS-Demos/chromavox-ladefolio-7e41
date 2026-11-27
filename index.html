@@ -1,0 +1,4626 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Girish Lade — Designing Better Digital Experiences</title>
+
+<meta name="description" content="Girish Lade — UI/UX designer, full-stack developer and founder of LadeStack. Explore browser-first tools, creative experiments and thoughtfully designed digital products.">
+<meta name="theme-color" content="#faf9f8">
+
+<meta property="og:title" content="Girish Lade — Independent Product Builder">
+<meta property="og:description" content="Engineering ideas into useful digital experiences.">
+<meta property="og:type" content="website">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23111111'/%3E%3Cpath d='M12 26v12m10-20v28m10-34v40m10-30v20m10-14v8' stroke='%23c4b5fd' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* ========================================
+   DESIGN SYSTEM
+======================================== */
+
+:root {
+    --background: #faf9f8;
+    --white: #ffffff;
+    --text: #151514;
+    --muted: #777674;
+    --border: #e8e6e3;
+    --surface: #f1f0ed;
+    --purple: #8474da;
+    --radius: 22px;
+    --container: 1120px;
+    --shadow: 0 20px 65px rgba(32, 24, 20, .07);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+}
+
+body {
+    font-family: "DM Sans", sans-serif;
+    background: var(--background);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+::selection {
+    background: #dfd7ff;
+    color: #19151f;
+}
+
+button, input, textarea, select {
+    font: inherit;
+}
+
+button, a, input, textarea, select {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+button {
+    color: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+    outline: 3px solid #9c89ed;
+    outline-offset: 5px;
+}
+
+h1, h2, h3, h4 {
+    font-family: "Manrope", sans-serif;
+    font-weight: 700;
+    line-height: 1.14;
+    letter-spacing: -.045em;
+}
+
+h2 {
+    font-size: clamp(32px, 4vw, 48px);
+}
+
+.container {
+    width: min(var(--container), calc(100% - 64px));
+    margin-inline: auto;
+}
+
+.section {
+    padding-block: 100px;
+}
+
+.eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 15px;
+}
+
+.eyebrow::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #8f80d8;
+}
+
+.subtitle {
+    color: var(--muted);
+    max-width: 540px;
+    margin-top: 18px;
+    font-size: 15px;
+}
+
+.center {
+    text-align: center;
+}
+
+.center .subtitle {
+    margin-inline: auto;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 45px;
+    padding: 11px 23px;
+    border-radius: 100px;
+    border: 1px solid transparent;
+    font-size: 12px;
+    font-weight: 700;
+    transition: transform .25s, background .25s, box-shadow .25s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+}
+
+.btn-dark {
+    background: #111;
+    color: #fff;
+    box-shadow: 0 4px 10px #00000012;
+}
+
+.btn-dark:hover {
+    background: #333;
+}
+
+.btn-light {
+    color: #111;
+    background: #fff;
+    border-color: var(--border);
+}
+
+.btn-light:hover {
+    box-shadow: var(--shadow);
+}
+
+.btn-ghost {
+    background: transparent;
+    border-color: var(--border);
+}
+
+.icon {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+}
+
+.icon-button {
+    display: grid;
+    place-items: center;
+    width: 43px;
+    height: 43px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    transition: .25s;
+}
+
+.icon-button:hover {
+    background: #151515;
+    color: white;
+    border-color: #151515;
+}
+
+.wave {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    height: 28px;
+}
+
+.wave i {
+    width: 3px;
+    border-radius: 20px;
+    background: currentColor;
+    display: block;
+}
+
+.wave i:nth-child(1) { height: 9px; }
+.wave i:nth-child(2) { height: 17px; }
+.wave i:nth-child(3) { height: 27px; }
+.wave i:nth-child(4) { height: 21px; }
+.wave i:nth-child(5) { height: 12px; }
+.wave i:nth-child(6) { height: 6px; }
+
+/* ========================================
+   ANNOUNCEMENT BAR
+======================================== */
+
+.announcement {
+    background:
+        radial-gradient(ellipse at 30% 0%, #4d344d, transparent 55%),
+        linear-gradient(90deg, #171421, #111);
+    color: #e6e2ee;
+    padding: 8px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.announcement-tag {
+    padding: 3px 10px;
+    border-radius: 30px;
+    background: linear-gradient(90deg, #9974df, #f49e66);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    white-space: nowrap;
+}
+
+.announcement a {
+    padding: 3px 12px;
+    background: white;
+    color: #161616;
+    font-weight: 700;
+    border-radius: 30px;
+    white-space: nowrap;
+}
+
+/* ========================================
+   NAVIGATION
+======================================== */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #faf9f8eb;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid #e7e5e370;
+}
+
+.navigation {
+    max-width: 1440px;
+    width: calc(100% - 100px);
+    margin: auto;
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "Manrope", sans-serif;
+    font-weight: 800;
+    font-size: 21px;
+    letter-spacing: -.055em;
+    white-space: nowrap;
+}
+
+.logo .wave {
+    color: #8271dc;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    font-weight: 500;
+    font-size: 12px;
+    color: #646361;
+    transition: color .2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #111;
+}
+
+.nav-links small {
+    font-size: 8px;
+    color: #986ade;
+    background: #eee6ff;
+    padding: 2px 5px;
+    margin-left: 3px;
+    border-radius: 4px;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+}
+
+.nav-actions .btn {
+    min-height: 35px;
+    padding: 8px 17px;
+}
+
+.menu-toggle {
+    display: none;
+}
+
+/* ========================================
+   HERO
+======================================== */
+
+.hero {
+    position: relative;
+    padding: 100px 0 80px;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 440px;
+    background-image:
+        linear-gradient(#b9b5c10d 1px, transparent 1px),
+        linear-gradient(90deg, #b9b5c10d 1px, transparent 1px);
+    background-size: 100px 100px;
+    mask-image: linear-gradient(#000, transparent);
+    pointer-events: none;
+}
+
+.hero-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.18fr .82fr;
+    gap: 75px;
+    align-items: center;
+}
+
+.hero-copy h1 {
+    font-size: clamp(45px, 5.5vw, 76px);
+    font-weight: 700;
+    letter-spacing: -.072em;
+    line-height: 1.04;
+    margin: 20px 0 24px;
+}
+
+.hero-copy h1 span {
+    color: #777572;
+}
+
+.hero-copy p {
+    max-width: 550px;
+    color: #777572;
+    line-height: 1.85;
+    font-size: 14px;
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 27px;
+}
+
+.hero-details {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 45px;
+    border-top: 1px solid var(--border);
+    padding-top: 21px;
+    gap: 15px;
+}
+
+.hero-details strong {
+    display: block;
+    font-size: 15px;
+    letter-spacing: -.03em;
+    font-family: "Manrope", sans-serif;
+}
+
+.hero-details span {
+    font-size: 10px;
+    color: #888;
+    display: block;
+    margin-top: 4px;
+}
+
+/* Black animated hero artwork */
+
+.hero-visual {
+    position: relative;
+    border-radius: 28px;
+    background: #100f0e;
+    min-height: 435px;
+    color: #fff;
+    padding: 24px;
+    overflow: hidden;
+    box-shadow:
+        0 35px 60px -16px #19141150,
+        0 8px 20px #00000020;
+    isolation: isolate;
+}
+
+.hero-visual::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 70% 20%, #25251d, transparent 50%),
+        radial-gradient(ellipse at 15% 65%, #292331, transparent 40%);
+}
+
+.visual-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #a4a19c;
+}
+
+.visual-header strong {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+}
+
+.live-dot {
+    width: 6px;
+    height: 6px;
+    background: #b7d5a4;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #96e37980;
+}
+
+.artwork {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 13px;
+    height: 290px;
+    padding: 12px 0;
+    perspective: 700px;
+}
+
+.art-bar {
+    width: 15%;
+    max-width: 55px;
+    height: var(--h);
+    background: var(--gradient);
+    border-radius: 100px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 18px #ffffff12;
+    animation: breathe 6s ease-in-out infinite;
+    animation-delay: var(--delay);
+}
+
+.art-bar::before {
+    content: "";
+    position: absolute;
+    inset: -30%;
+    background:
+        radial-gradient(ellipse at 30% 20%, #ffffff60, transparent 35%),
+        radial-gradient(ellipse at 70% 80%, #00000050, transparent 45%);
+    filter: blur(7px);
+    animation: drift 9s ease-in-out infinite alternate;
+}
+
+.art-bar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.2'/%3E%3C/svg%3E");
+    opacity: .35;
+}
+
+.art-bar:nth-child(1) {
+    --h: 82px;
+    --gradient: linear-gradient(160deg, #a19b62, #514939, #b2ab6c);
+    --delay: -.7s;
+}
+
+.art-bar:nth-child(2) {
+    --h: 193px;
+    --gradient: linear-gradient(160deg, #f0c88d, #b46d25, #697f68);
+    --delay: -1.8s;
+}
+
+.art-bar:nth-child(3) {
+    --h: 145px;
+    --gradient: linear-gradient(160deg, #427bd1, #102b46, #d4e0a2);
+    --delay: -2.5s;
+}
+
+.art-bar:nth-child(4) {
+    --h: 255px;
+    --gradient: linear-gradient(160deg, #e4efb5, #9ed78a, #44783b);
+    --delay: -3.3s;
+}
+
+.art-bar:nth-child(5) {
+    --h: 138px;
+    --gradient: linear-gradient(160deg, #d6af85, #825234, #eac592);
+    --delay: -4s;
+}
+
+.art-bar:nth-child(6) {
+    --h: 200px;
+    --gradient: linear-gradient(160deg, #ba97cd, #614b96, #38315d);
+    --delay: -4.6s;
+}
+
+.art-bar:nth-child(7) {
+    --h: 84px;
+    --gradient: linear-gradient(160deg, #70b6a5, #1c6f73, #163e42);
+    --delay: -5.3s;
+}
+
+@keyframes breathe {
+    0%, 100% { transform: scaleY(.88) translateY(3px); }
+    50% { transform: scaleY(1.04) translateY(-4px); }
+}
+
+@keyframes drift {
+    from { transform: translate(-8%, -10%) rotate(-15deg); }
+    to { transform: translate(10%, 8%) rotate(15deg); }
+}
+
+.hero-visual.paused *,
+.hero-visual.paused *::before {
+    animation-play-state: paused !important;
+}
+
+.visual-player {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.play-button {
+    border: none;
+    background: #fff;
+    color: #111;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    transition: transform .25s;
+}
+
+.play-button:hover {
+    transform: scale(1.1);
+}
+
+.player-copy {
+    flex: 1;
+}
+
+.player-copy strong {
+    font-size: 12px;
+    display: block;
+}
+
+.player-copy small,
+.visual-index {
+    font-size: 10px;
+    color: #8f8d89;
+}
+
+.player-progress {
+    height: 2px;
+    margin-top: 18px;
+    background: #ffffff17;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.player-progress span {
+    height: 100%;
+    width: 35%;
+    display: block;
+    background: #aaa1c8;
+    animation: progress 12s linear infinite;
+}
+
+@keyframes progress {
+    from { width: 5%; }
+    to { width: 100%; }
+}
+
+/* ========================================
+   INTERACTIVE PROJECT FINDER
+======================================== */
+
+.studio-section {
+    padding: 20px 0 95px;
+}
+
+.studio-tabs {
+    width: fit-content;
+    max-width: 100%;
+    display: flex;
+    gap: 5px;
+    padding: 5px;
+    margin: 0 auto 26px;
+    border-radius: 50px;
+    border: 1px solid #e8e6e3;
+    background: #f1f0ee;
+    box-shadow: 0 4px 8px #00000004;
+}
+
+.studio-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    background: none;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 28px;
+    font-size: 11px;
+    color: #777;
+    white-space: nowrap;
+}
+
+.studio-tab.active {
+    background: #fff;
+    color: #151515;
+    box-shadow: 0 2px 6px #00000009;
+}
+
+.studio-shell {
+    max-width: 800px;
+    margin: auto;
+    padding: 13px;
+    border-radius: 30px;
+    background: #eae8e5;
+    box-shadow: 0 24px 45px -20px #00000025;
+}
+
+.studio {
+    border-radius: 19px;
+    background: white;
+    padding: 18px;
+    min-height: 430px;
+    display: flex;
+    flex-direction: column;
+}
+
+.studio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 7px 17px;
+    font-size: 10px;
+}
+
+.status-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #777;
+}
+
+.status-label::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #96b98e;
+}
+
+.studio-tools {
+    display: flex;
+    gap: 13px;
+}
+
+.text-button {
+    border: none;
+    background: transparent;
+    color: #777;
+    font-size: 11px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.text-button:hover {
+    color: #111;
+}
+
+.studio-content {
+    flex: 1;
+    min-height: 280px;
+    border: 1px solid #efeeec;
+    border-radius: 13px;
+    background: #fdfdfc;
+    padding: 22px;
+}
+
+.studio-content textarea {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    min-height: 145px;
+    resize: vertical;
+    color: #222;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.studio-content textarea::placeholder {
+    color: #a6a39e;
+}
+
+.prompt-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 22px;
+}
+
+.prompt-chip {
+    padding: 6px 11px;
+    border: 1px solid #e8e6e3;
+    border-radius: 8px;
+    font-size: 10px;
+    background: #fff;
+    color: #777;
+}
+
+.prompt-chip:hover {
+    color: #111;
+    border-color: #aaa;
+}
+
+.studio-options {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 3px;
+}
+
+.studio-options select {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #eeece9;
+    border-radius: 9px;
+    font-size: 11px;
+    min-height: 37px;
+    color: #444;
+    padding-inline: 12px;
+}
+
+.studio-submit {
+    width: 100%;
+    min-height: 44px;
+    border-radius: 9px;
+}
+
+.finder-results {
+    display: grid;
+    gap: 9px;
+    margin-top: 12px;
+}
+
+.result-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid var(--border);
+    padding: 13px;
+    border-radius: 10px;
+    background: #fff;
+    transition: .2s;
+}
+
+.result-row:hover {
+    transform: translateX(3px);
+    border-color: #bdb7cf;
+}
+
+.result-row .result-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    background: #f0edf8;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+}
+
+.result-row strong {
+    display: block;
+    font-size: 12px;
+}
+
+.result-row p {
+    font-size: 10px;
+    color: #888;
+}
+
+.result-row > .icon {
+    margin-left: auto;
+}
+
+.profile-preview h3 {
+    font-size: 27px;
+    margin: 13px 0;
+}
+
+.profile-preview p {
+    color: #777;
+    font-size: 13px;
+}
+
+.profile-preview .btn {
+    margin-top: 22px;
+}
+
+.panel-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    display: grid;
+    place-items: center;
+    background: #ddd4f4;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* ========================================
+   FEATURED PROJECTS
+======================================== */
+
+.featured {
+    padding: 45px 0 100px;
+}
+
+.featured-header {
+    max-width: 360px;
+}
+
+.featured-header h2 {
+    max-width: 330px;
+}
+
+.mini-products {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.mini-icons {
+    display: flex;
+    padding-left: 5px;
+}
+
+.mini-icons span {
+    display: grid;
+    place-items: center;
+    border: 2px solid var(--background);
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin-left: -5px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.mini-products > span {
+    font-size: 10px;
+    color: #777;
+}
+
+.carousel {
+    position: relative;
+    margin-top: 10px;
+}
+
+.carousel-track {
+    display: grid;
+    grid-template-columns: .85fr 1.2fr .85fr;
+    align-items: end;
+    gap: 27px;
+    padding: 20px 48px 35px;
+}
+
+.project-card {
+    position: relative;
+    min-height: 310px;
+    border-radius: 19px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    isolation: isolate;
+    overflow: hidden;
+    transition: transform .4s;
+    box-shadow: 0 16px 30px #2420110c;
+}
+
+.project-card.is-center {
+    min-height: 425px;
+    margin-top: -105px;
+}
+
+.project-card:hover {
+    transform: translateY(-6px);
+}
+
+.project-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background: var(--card-gradient);
+}
+
+.project-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='.3'/%3E%3C/svg%3E");
+    mix-blend-mode: soft-light;
+    opacity: .55;
+}
+
+.project-card .card-category {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .16em;
+    opacity: .65;
+    margin-bottom: 8px;
+}
+
+.project-card h3 {
+    font-size: 29px;
+    letter-spacing: -.055em;
+}
+
+.project-card.is-center h3 {
+    font-size: 38px;
+}
+
+.project-card p {
+    font-size: 11px;
+    color: #35352bd9;
+    max-width: 280px;
+    line-height: 1.7;
+}
+
+.card-art {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 90px;
+}
+
+.project-waveform {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    max-width: 240px;
+    position: relative;
+    height: 100px;
+}
+
+.project-waveform i {
+    display: block;
+    width: 3px;
+    height: var(--wave-height);
+    border-radius: 20px;
+    background: #ffffff90;
+    animation: waveform 2.8s ease-in-out infinite alternate;
+    animation-delay: var(--wave-delay);
+}
+
+@keyframes waveform {
+    from { transform: scaleY(.55); }
+    to { transform: scaleY(1.1); }
+}
+
+.card-open {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 57px;
+    height: 57px;
+    display: grid;
+    place-items: center;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 5px 18px #0000000c;
+    transition: .25s;
+}
+
+.card-open:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 20px;
+    font-size: 9px;
+    font-weight: 600;
+}
+
+.card-footer > span {
+    opacity: .65;
+}
+
+.card-footer a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.carousel-prev,
+.carousel-next {
+    position: absolute;
+    top: 53%;
+    z-index: 5;
+    box-shadow: 0 5px 15px #00000008;
+}
+
+.carousel-prev { left: 0; }
+.carousel-next { right: 0; }
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin: 5px 0 18px;
+}
+
+.carousel-dots button {
+    border: none;
+    border-radius: 20px;
+    height: 5px;
+    width: 5px;
+    background: #d2cfca;
+    transition: width .3s;
+}
+
+.carousel-dots button.active {
+    width: 20px;
+    background: #222;
+}
+
+/* ========================================
+   FEATURE GRID
+======================================== */
+
+.feature-section {
+    padding: 75px 0 55px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 48px;
+}
+
+.feature {
+    min-height: 215px;
+    padding: 25px 27px 30px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    transition: background .25s;
+}
+
+.feature:hover {
+    background: #fff;
+}
+
+.feature:nth-child(3n) {
+    border-right: none;
+}
+
+.feature:nth-child(n+4) {
+    border-bottom: none;
+}
+
+.feature-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.feature-index {
+    font-size: 10px;
+    color: #a4a09c;
+}
+
+.feature-symbol {
+    display: grid;
+    place-items: center;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: #fff;
+}
+
+.feature h3 {
+    font-size: 16px;
+    letter-spacing: -.025em;
+    margin-bottom: 12px;
+}
+
+.feature p {
+    font-size: 12px;
+    color: #777;
+    line-height: 1.8;
+}
+
+.workflow-strip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 17px;
+    flex-wrap: wrap;
+    padding: 24px 0;
+    font-size: 11px;
+    color: #918d89;
+}
+
+.workflow-strip span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+/* ========================================
+   DARK ECOSYSTEM BANNER
+======================================== */
+
+.ecosystem-section {
+    padding: 5px 0 90px;
+}
+
+.ecosystem {
+    color: white;
+    background:
+        radial-gradient(ellipse at 0% 100%, #30263e45, transparent 60%),
+        #100f0e;
+    border-radius: 25px;
+    padding: 65px 52px;
+    display: grid;
+    grid-template-columns: .95fr 1.05fr;
+    gap: 65px;
+    align-items: center;
+    overflow: hidden;
+}
+
+.ecosystem-copy h2 {
+    font-size: clamp(29px, 3.4vw, 43px);
+}
+
+.ecosystem-copy p {
+    color: #999691;
+    font-size: 12px;
+    line-height: 1.9;
+    margin-top: 20px;
+}
+
+.ecosystem-copy .btn {
+    margin-top: 26px;
+}
+
+.ecosystem-copy .eyebrow {
+    color: #9d9997;
+}
+
+.ecosystem-widgets {
+    display: grid;
+    gap: 10px;
+}
+
+.ecosystem-widget {
+    background: #fff;
+    color: #171717;
+    border-radius: 15px;
+    padding: 14px;
+    margin-left: var(--offset, 0px);
+    transition: transform .3s;
+}
+
+.ecosystem-widget:hover {
+    transform: translateX(-7px);
+}
+
+.widget-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.widget-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--widget-color, #e2ddfa);
+    font-weight: 800;
+    font-size: 13px;
+}
+
+.widget-header strong {
+    display: block;
+    font-size: 12px;
+}
+
+.widget-header small {
+    color: #888;
+    display: block;
+    font-size: 9px;
+}
+
+.widget-link {
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    margin-left: auto;
+    border-radius: 50%;
+    background: #111;
+    color: #fff;
+}
+
+.widget-link .icon {
+    width: 13px;
+    height: 13px;
+}
+
+.widget-wave {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 35px;
+    overflow: hidden;
+    margin-top: 9px;
+}
+
+.widget-wave i {
+    width: 2px;
+    min-width: 2px;
+    height: var(--wave-height);
+    background: #d4d3cf;
+    border-radius: 10px;
+}
+
+.widget-description {
+    font-size: 11px;
+    color: #777;
+    margin-top: 9px;
+}
+
+/* ========================================
+   TECHNOLOGY SECTION
+======================================== */
+
+.technology {
+    padding: 30px 0 95px;
+}
+
+.technology h2 {
+    font-size: clamp(26px, 3vw, 38px);
+}
+
+.technology-grid {
+    margin: 40px auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0 30px;
+    max-width: 940px;
+}
+
+.tech-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 17px 6px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.tech-logo {
+    display: grid;
+    place-items: center;
+    width: 23px;
+    height: 23px;
+    font-size: 10px;
+    color: var(--tech-color);
+    font-weight: 800;
+    background: #fff;
+    border-radius: 6px;
+    border: 1px solid #eae8e5;
+    flex-shrink: 0;
+}
+
+.tech-category {
+    margin-left: auto;
+    font-size: 9px;
+    font-weight: 400;
+    color: #96918b;
+}
+
+/* ========================================
+   DESIGN PHILOSOPHY
+======================================== */
+
+.philosophy {
+    padding: 75px 0 90px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 45px;
+}
+
+.section-heading p {
+    color: #888;
+    font-size: 12px;
+    max-width: 330px;
+}
+
+.philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 23px;
+}
+
+.philosophy-card {
+    background: #f1f0ed;
+    border-radius: 4px 4px 20px 20px;
+    padding: 27px;
+    min-height: 295px;
+    display: flex;
+    flex-direction: column;
+    transition: .3s;
+}
+
+.philosophy-card:hover {
+    transform: translateY(-5px);
+    background: #eeece9;
+}
+
+.quote-mark {
+    font-family: Georgia, serif;
+    font-size: 62px;
+    color: #c5c2bd;
+    line-height: 1;
+}
+
+.philosophy-card h3 {
+    font-size: 19px;
+    margin: 10px 0 13px;
+}
+
+.philosophy-card p {
+    color: #696763;
+    font-size: 12px;
+    line-height: 1.9;
+    flex: 1;
+}
+
+.philosophy-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid #dedcd7;
+    margin-top: 25px;
+    padding-top: 17px;
+}
+
+.author-icon {
+    width: 31px;
+    height: 31px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 10px;
+    background: var(--author-color);
+}
+
+.philosophy-author strong {
+    font-size: 10px;
+    display: block;
+}
+
+.philosophy-author small {
+    font-size: 9px;
+    color: #888;
+}
+
+/* ========================================
+   FAQ
+======================================== */
+
+.faq-section {
+    padding: 65px 0 100px;
+}
+
+.faq-layout {
+    display: grid;
+    grid-template-columns: .7fr 1.6fr;
+    align-items: start;
+    gap: 65px;
+}
+
+.faq-intro h2 {
+    font-size: 35px;
+}
+
+.faq-intro p {
+    margin-top: 17px;
+    max-width: 235px;
+    color: #888;
+    font-size: 12px;
+}
+
+.faq-item {
+    border-bottom: 1px solid var(--border);
+}
+
+.faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 19px 0;
+    gap: 25px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq-indicator {
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    background: #eeedea;
+    color: #777;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    transition: transform .3s, background .3s;
+}
+
+.faq-item[open] .faq-indicator {
+    transform: rotate(45deg);
+    background: #151515;
+    color: #fff;
+}
+
+.faq-answer {
+    color: #777;
+    font-size: 12px;
+    line-height: 1.9;
+    padding: 0 35px 22px 0;
+}
+
+.faq-answer a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* ========================================
+   CONTACT CTA
+======================================== */
+
+.contact-section {
+    padding: 10px 0 80px;
+}
+
+.contact-banner {
+    padding: 50px 55px;
+    border-radius: 5px 5px 30px 30px;
+    background: #100f0e;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 45px;
+    overflow: hidden;
+    position: relative;
+}
+
+.contact-copy {
+    max-width: 530px;
+    position: relative;
+    z-index: 2;
+}
+
+.contact-copy h2 {
+    font-size: clamp(32px, 4.5vw, 52px);
+    line-height: 1.1;
+}
+
+.contact-copy p {
+    color: #9e9b96;
+    font-size: 13px;
+    margin: 20px 0 24px;
+}
+
+.contact-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 10px;
+    color: #aaa;
+    margin-top: 23px;
+}
+
+.contact-art {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-width: 210px;
+    height: 190px;
+}
+
+.contact-art i {
+    display: block;
+    border-radius: 50px;
+    width: 12px;
+    height: var(--height);
+    background: linear-gradient(180deg, #fff, #a09e9b);
+    animation: breathe 4s ease-in-out infinite;
+    animation-delay: var(--delay);
+}
+
+.contact-art i:nth-child(1) {
+    --height: 32px;
+    --delay: -.3s;
+}
+
+.contact-art i:nth-child(2) {
+    --height: 64px;
+    --delay: -.8s;
+}
+
+.contact-art i:nth-child(3) {
+    --height: 100px;
+    --delay: -1.3s;
+}
+
+.contact-art i:nth-child(4) {
+    --height: 140px;
+    --delay: -1.8s;
+}
+
+.contact-art i:nth-child(5) {
+    --height: 170px;
+    --delay: -2.3s;
+}
+
+.contact-art i:nth-child(6) {
+    --height: 115px;
+    --delay: -2.8s;
+}
+
+.contact-art i:nth-child(7) {
+    --height: 75px;
+    --delay: -3.3s;
+}
+
+.contact-art i:nth-child(8) {
+    --height: 39px;
+    --delay: -3.8s;
+}
+
+/* ========================================
+   FOOTER
+======================================== */
+
+.footer {
+    position: relative;
+    background: #fff;
+    overflow: hidden;
+    padding: 60px 0 0;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr repeat(4, 1fr);
+    gap: 35px;
+    position: relative;
+    z-index: 2;
+}
+
+.footer-brand p {
+    font-size: 11px;
+    line-height: 1.8;
+    max-width: 240px;
+    margin: 15px 0;
+    color: #888;
+}
+
+.footer-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.footer-buttons .btn {
+    font-size: 10px;
+    padding: 8px 11px;
+    min-height: 35px;
+    border-radius: 7px;
+}
+
+.social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+}
+
+.social-links a {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: #f2f1ef;
+    font-size: 11px;
+    font-weight: 700;
+    transition: .25s;
+}
+
+.social-links a:hover {
+    background: #111;
+    color: white;
+    transform: translateY(-3px);
+}
+
+.footer-column h4 {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: #999;
+    margin-bottom: 20px;
+}
+
+.footer-column a {
+    display: block;
+    color: #65625e;
+    font-size: 11px;
+    margin-bottom: 10px;
+}
+
+.footer-column a:hover {
+    color: #111;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.footer-bottom {
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid #eeece8;
+    text-align: center;
+    font-size: 10px;
+    color: #96928d;
+    position: relative;
+    z-index: 2;
+}
+
+.footer-bottom span {
+    padding: 0 7px;
+}
+
+.footer-art {
+    position: relative;
+    height: 280px;
+    margin-top: 35px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.footer-orb {
+    position: absolute;
+    width: 110%;
+    height: 480px;
+    left: 50%;
+    bottom: -375px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: #0d0c0e;
+    box-shadow:
+        0 -12px 55px #6758fc70,
+        -160px -10px 60px #7468ee80,
+        150px -10px 60px #8a78e570;
+    filter: blur(7px);
+}
+
+.back-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 90;
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: .3s;
+    box-shadow: 0 5px 25px #00000012;
+}
+
+.back-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* ========================================
+   MOTION
+======================================== */
+
+.motion-ready .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+        opacity .8s cubic-bezier(.2,.65,.3,1),
+        transform .8s cubic-bezier(.2,.65,.3,1);
+}
+
+.motion-ready .reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes entrance {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.project-card {
+    animation: entrance .5s ease both;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 1050px) {
+
+    .navigation {
+        width: calc(100% - 48px);
+    }
+
+    .nav-links {
+        gap: 17px;
+    }
+
+    .hero-grid {
+        gap: 35px;
+    }
+
+    .hero-visual {
+        min-height: 405px;
+    }
+
+    .artwork {
+        gap: 8px;
+        height: 260px;
+    }
+
+    .art-bar {
+        max-height: 220px;
+    }
+
+    .carousel-track {
+        gap: 16px;
+        padding-inline: 40px;
+    }
+
+    .project-card {
+        padding: 19px;
+    }
+
+    .ecosystem {
+        gap: 35px;
+        padding: 45px 35px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1.4fr repeat(2, 1fr);
+        row-gap: 45px;
+    }
+}
+
+@media (max-width: 800px) {
+
+    .container {
+        width: calc(100% - 40px);
+    }
+
+    .navigation {
+        width: calc(100% - 40px);
+        min-height: 65px;
+    }
+
+    .menu-toggle {
+        display: grid;
+    }
+
+    .nav-actions .github-nav {
+        display: none;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        left: 15px;
+        right: 15px;
+        top: calc(100% + 8px);
+        flex-direction: column;
+        align-items: stretch;
+        background: #fff;
+        padding: 15px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        box-shadow: var(--shadow);
+        gap: 0;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-links a {
+        padding: 13px 12px;
+        border-radius: 8px;
+    }
+
+    .nav-links a:hover {
+        background: #f1f0ed;
+    }
+
+    .hero {
+        padding: 65px 0 55px;
+    }
+
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .hero-copy h1 {
+        max-width: 670px;
+    }
+
+    .hero-copy p {
+        max-width: 620px;
+    }
+
+    .hero-visual {
+        width: 100%;
+        max-width: 480px;
+        margin: auto;
+    }
+
+    .hero-details {
+        max-width: 550px;
+    }
+
+    .studio-section {
+        padding-bottom: 60px;
+    }
+
+    .featured {
+        padding: 45px 0 60px;
+    }
+
+    .featured-header {
+        max-width: 100%;
+    }
+
+    .featured-header h2 {
+        max-width: 100%;
+    }
+
+    .carousel-track {
+        grid-template-columns: 1fr;
+        max-width: 460px;
+        margin: auto;
+        padding: 25px 35px;
+    }
+
+    .project-card:not(.is-center) {
+        display: none;
+    }
+
+    .project-card.is-center {
+        min-height: 420px;
+        margin-top: 0;
+    }
+
+    .carousel-prev {
+        left: 0;
+        top: 48%;
+    }
+
+    .carousel-next {
+        right: 0;
+        top: 48%;
+    }
+
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .feature:nth-child(n) {
+        border-bottom: 1px solid var(--border);
+        border-right: 1px solid var(--border);
+    }
+
+    .feature:nth-child(2n) {
+        border-right: none;
+    }
+
+    .feature:nth-child(n+5) {
+        border-bottom: none;
+    }
+
+    .feature-section,
+    .philosophy,
+    .faq-section {
+        padding-block: 55px;
+    }
+
+    .ecosystem {
+        grid-template-columns: 1fr;
+        gap: 35px;
+        padding: 35px;
+    }
+
+    .ecosystem-copy {
+        max-width: 500px;
+    }
+
+    .ecosystem-widgets {
+        max-width: 500px;
+    }
+
+    .technology-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .philosophy-grid {
+        grid-template-columns: 1fr;
+        gap: 13px;
+    }
+
+    .philosophy-card {
+        min-height: auto;
+    }
+
+    .section-heading {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .faq-layout {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .faq-intro p {
+        max-width: 100%;
+    }
+
+    .contact-banner {
+        padding: 40px 30px;
+    }
+
+    .contact-art {
+        min-width: 100px;
+        gap: 5px;
+        transform: scale(.75);
+    }
+
+    .contact-art i {
+        width: 8px;
+    }
+
+    .footer-art {
+        height: 190px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .announcement {
+        gap: 6px;
+        padding-inline: 7px;
+        font-size: 9px;
+    }
+
+    .announcement-tag {
+        display: none;
+    }
+
+    .announcement a {
+        font-size: 8px;
+    }
+
+    .logo {
+        font-size: 19px;
+    }
+
+    .nav-actions .btn {
+        font-size: 10px;
+        padding-inline: 13px;
+    }
+
+    .hero-copy h1 {
+        font-size: 44px;
+    }
+
+    .hero-details {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 21px;
+    }
+
+    .hero-visual {
+        border-radius: 24px;
+        padding: 20px;
+        min-height: 365px;
+    }
+
+    .artwork {
+        height: 235px;
+        gap: 8px;
+    }
+
+    .art-bar {
+        max-height: 205px;
+    }
+
+    .studio-tabs {
+        width: 100%;
+    }
+
+    .studio-tab {
+        padding: 10px 8px;
+        flex: 1;
+        gap: 4px;
+        font-size: 9px;
+    }
+
+    .studio-tab .icon {
+        width: 13px;
+        height: 13px;
+    }
+
+    .studio-shell {
+        padding: 8px;
+        border-radius: 23px;
+    }
+
+    .studio {
+        padding: 10px;
+        border-radius: 16px;
+    }
+
+    .studio-content {
+        padding: 15px;
+    }
+
+    .studio-header {
+        font-size: 9px;
+    }
+
+    .studio-content textarea {
+        font-size: 13px;
+    }
+
+    .feature {
+        padding: 19px 15px;
+    }
+
+    .feature h3 {
+        font-size: 15px;
+    }
+
+    .feature p {
+        font-size: 11px;
+    }
+
+    .feature-top {
+        margin-bottom: 20px;
+    }
+
+    .carousel-track {
+        padding-inline: 23px;
+    }
+
+    .carousel-prev,
+    .carousel-next {
+        width: 34px;
+        height: 34px;
+    }
+
+    .project-card.is-center {
+        min-height: 365px;
+    }
+
+    .ecosystem {
+        padding: 28px 22px;
+    }
+
+    .ecosystem-widget {
+        margin-left: 0;
+    }
+
+    .technology-grid {
+        gap: 0 15px;
+    }
+
+    .tech-category {
+        display: none;
+    }
+
+    .contact-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .contact-art {
+        align-self: center;
+        height: 145px;
+        transform: scale(.65);
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px 20px;
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+    }
+
+    .footer-art {
+        height: 145px;
+    }
+
+    .footer-orb {
+        width: 145%;
+    }
+
+    .back-top {
+        bottom: 14px;
+        right: 14px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .motion-ready .reveal {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =====================================
+     SVG ICON LIBRARY
+====================================== -->
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     style="position:absolute;width:0;height:0;overflow:hidden"
+     aria-hidden="true">
+
+    <symbol id="i-arrow" viewBox="0 0 24 24">
+        <path d="M5 12h14m-6-6 6 6-6 6"/>
+    </symbol>
+
+    <symbol id="i-external" viewBox="0 0 24 24">
+        <path d="M7 17 17 7M7 7h10v10"/>
+    </symbol>
+
+    <symbol id="i-left" viewBox="0 0 24 24">
+        <path d="m15 18-6-6 6-6"/>
+    </symbol>
+
+    <symbol id="i-right" viewBox="0 0 24 24">
+        <path d="m9 18 6-6-6-6"/>
+    </symbol>
+
+    <symbol id="i-up" viewBox="0 0 24 24">
+        <path d="M12 19V5m-6 6 6-6 6 6"/>
+    </symbol>
+
+    <symbol id="i-play" viewBox="0 0 24 24">
+        <path d="m9 5 11 7-11 7z" fill="currentColor"/>
+    </symbol>
+
+    <symbol id="i-pause" viewBox="0 0 24 24">
+        <path d="M9 5v14M15 5v14" stroke-width="3"/>
+    </symbol>
+
+    <symbol id="i-menu" viewBox="0 0 24 24">
+        <path d="M4 8h16M4 16h16"/>
+    </symbol>
+
+    <symbol id="i-close" viewBox="0 0 24 24">
+        <path d="m6 6 12 12M18 6 6 18"/>
+    </symbol>
+
+    <symbol id="i-code" viewBox="0 0 24 24">
+        <path d="m8 6-6 6 6 6m8-12 6 6-6 6M14 3l-4 18"/>
+    </symbol>
+
+    <symbol id="i-sparkle" viewBox="0 0 24 24">
+        <path d="m12 2 3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/>
+    </symbol>
+
+    <symbol id="i-grid" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="7" height="7" rx="1"/>
+        <rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/>
+        <rect x="14" y="14" width="7" height="7" rx="1"/>
+    </symbol>
+
+    <symbol id="i-user" viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 21v-2a8 8 0 0 1 16 0v2"/>
+    </symbol>
+
+    <symbol id="i-mail" viewBox="0 0 24 24">
+        <rect x="3" y="5" width="18" height="14" rx="2"/>
+        <path d="m3 7 9 6 9-6"/>
+    </symbol>
+
+    <symbol id="i-shield" viewBox="0 0 24 24">
+        <path d="M12 2 3 6v6c0 5 5 9 9 10 4-1 9-5 9-10V6z"/>
+        <path d="m8 12 3 3 5-6"/>
+    </symbol>
+
+    <symbol id="i-layers" viewBox="0 0 24 24">
+        <path d="m12 3 10 5-10 5L2 8zm-10 9 10 5 10-5M2 16l10 5 10-5"/>
+    </symbol>
+
+    <symbol id="i-globe" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <ellipse cx="12" cy="12" rx="4" ry="9"/>
+        <path d="M3 12h18"/>
+    </symbol>
+
+    <symbol id="i-bolt" viewBox="0 0 24 24">
+        <path d="m13 2-9 12h7l-1 8 10-12h-7z"/>
+    </symbol>
+
+    <symbol id="i-terminal" viewBox="0 0 24 24">
+        <rect x="2" y="4" width="20" height="16" rx="2"/>
+        <path d="m6 8 4 4-4 4m7 0h5"/>
+    </symbol>
+
+    <symbol id="i-search" viewBox="0 0 24 24">
+        <circle cx="10" cy="10" r="6"/>
+        <path d="m15 15 6 6"/>
+    </symbol>
+
+    <symbol id="i-plus" viewBox="0 0 24 24">
+        <path d="M12 5v14M5 12h14"/>
+    </symbol>
+
+    <symbol id="i-refresh" viewBox="0 0 24 24">
+        <path d="M20 7V2l-4 4A8 8 0 1 0 20 15M20 7h-5"/>
+    </symbol>
+
+    <symbol id="i-design" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="18" height="18" rx="3"/>
+        <path d="M3 9h18M9 9v12"/>
+    </symbol>
+
+    <symbol id="i-file" viewBox="0 0 24 24">
+        <path d="M6 2h8l5 5v15H6zM14 2v6h5M9 13h7m-7 4h7"/>
+    </symbol>
+
+    <symbol id="i-github" viewBox="0 0 24 24">
+        <path d="M9 19c-4 1-4-2-6-2m12 5v-4c0-1-.3-2-1-2 4-.5 6-2 6-6 0-2-1-3-2-4 .3-1 .3-2 0-3-2 0-4 1-4 1-2-.5-4-.5-6 0 0 0-2-1-4-1-.3 1-.3 2 0 3-1 1-2 2-2 4 0 4 2 5.5 6 6-.7.5-1 1.5-1 3v3"/>
+    </symbol>
+
+</svg>
+
+<!-- =====================================
+     TOP ANNOUNCEMENT
+====================================== -->
+
+<div class="announcement">
+    <span class="announcement-tag">INDEPENDENT BUILDER</span>
+    <span>Discover the LadeStack ecosystem — tools built for everyday creators.</span>
+    <a href="https://ladestack.in/" target="_blank" rel="noopener noreferrer">
+        Explore ↗
+    </a>
+</div>
+
+<!-- =====================================
+     HEADER
+====================================== -->
+
+<header class="header">
+    <nav class="navigation" aria-label="Main navigation">
+
+        <a class="logo" href="#home" aria-label="Girish Lade home">
+            <span class="wave" aria-hidden="true">
+                <i></i><i></i><i></i><i></i><i></i><i></i>
+            </span>
+            Girish Lade
+        </a>
+
+        <div class="nav-links" id="navLinks">
+            <a href="#home">Home</a>
+            <a href="#projects">My Work</a>
+            <a href="#expertise">Expertise</a>
+            <a href="#ecosystem">LadeStack <small>LABS</small></a>
+            <a href="#about">About</a>
+        </div>
+
+        <div class="nav-actions">
+
+            <a href="#contact" class="btn btn-dark">
+                Let's talk
+            </a>
+
+            <a href="https://github.com/girishlade111"
+               class="btn btn-light github-nav"
+               target="_blank"
+               rel="noopener noreferrer">
+                <svg class="icon"><use href="#i-github"/></svg>
+                GitHub
+            </a>
+
+            <button class="icon-button menu-toggle"
+                    id="menuToggle"
+                    aria-label="Open navigation"
+                    aria-expanded="false"
+                    aria-controls="navLinks">
+                <svg class="icon"><use href="#i-menu"/></svg>
+            </button>
+
+        </div>
+    </nav>
+</header>
+
+<main>
+
+<!-- =====================================
+     HERO
+====================================== -->
+
+<section class="hero" id="home">
+
+    <div class="container hero-grid">
+
+        <div class="hero-copy">
+
+            <div class="eyebrow">
+                Independent developer & product designer
+            </div>
+
+            <h1>
+                Building useful<br>
+                digital products.<br>
+                <span>Designing better<br>experiences.</span>
+            </h1>
+
+            <p>
+                I'm Girish Lade, a UI/UX designer, full-stack developer
+                and founder of LadeStack. I combine thoughtful design
+                with hands-on engineering to create accessible,
+                privacy-conscious software for developers, students
+                and independent creators.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="#projects" class="btn btn-dark">
+                    Explore my work
+                    <svg class="icon"><use href="#i-arrow"/></svg>
+                </a>
+
+                <a href="#about" class="btn btn-light">
+                    More about me
+                </a>
+
+            </div>
+
+            <div class="hero-details">
+
+                <div>
+                    <strong>Design</strong>
+                    <span>UI/UX & interfaces</span>
+                </div>
+
+                <div>
+                    <strong>Develop</strong>
+                    <span>Full-stack products</span>
+                </div>
+
+                <div>
+                    <strong>Create</strong>
+                    <span>Browser-first tools</span>
+                </div>
+
+                <div>
+                    <strong>India</strong>
+                    <span>Based in Pune</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="hero-visual" id="heroVisual">
+
+            <div class="visual-header">
+                <strong>
+                    <span class="live-dot"></span>
+                    LadeStack Studio
+                </strong>
+                <span>Creative frequency / 01</span>
+            </div>
+
+            <div class="artwork" aria-hidden="true">
+                <div class="art-bar"></div>
+                <div class="art-bar"></div>
+                <div class="art-bar"></div>
+                <div class="art-bar"></div>
+                <div class="art-bar"></div>
+                <div class="art-bar"></div>
+                <div class="art-bar"></div>
+            </div>
+
+            <div class="visual-player">
+
+                <button class="play-button"
+                        id="artToggle"
+                        aria-label="Pause artwork animation"
+                        aria-pressed="false">
+                    <svg class="icon"><use href="#i-pause"/></svg>
+                </button>
+
+                <div class="player-copy">
+                    <strong>Made of ideas.</strong>
+                    <small id="artStatus">
+                        An animated study in color and rhythm
+                    </small>
+                </div>
+
+                <span class="visual-index">GL — 001</span>
+
+            </div>
+
+            <div class="player-progress" aria-hidden="true">
+                <span></span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================
+     INTERACTIVE STUDIO
+====================================== -->
+
+<section class="studio-section" id="studio">
+
+    <div class="container reveal">
+
+        <div class="studio-tabs"
+             role="group"
+             aria-label="Portfolio explorer modes">
+
+            <button class="studio-tab active"
+                    data-tab="projects"
+                    aria-pressed="true">
+                <svg class="icon"><use href="#i-grid"/></svg>
+                Explore projects
+            </button>
+
+            <button class="studio-tab"
+                    data-tab="profile"
+                    aria-pressed="false">
+                <svg class="icon"><use href="#i-user"/></svg>
+                About me
+            </button>
+
+            <button class="studio-tab"
+                    data-tab="contact"
+                    aria-pressed="false">
+                <svg class="icon"><use href="#i-mail"/></svg>
+                Get in touch
+            </button>
+
+        </div>
+
+        <div class="studio-shell">
+
+            <div class="studio" id="studioPanel">
+
+                <div class="studio-header">
+
+                    <span class="status-label">
+                        Portfolio explorer
+                    </span>
+
+                    <div class="studio-tools">
+                        <button class="text-button" id="exampleButton">
+                            Try an example
+                        </button>
+
+                        <button class="text-button"
+                                id="resetFinder"
+                                aria-label="Reset explorer">
+                            <svg class="icon"><use href="#i-refresh"/></svg>
+                            Reset
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="studio-content" id="studioContent"></div>
+
+                <div class="studio-options" id="studioOptions">
+
+                    <select id="categoryFilter" aria-label="Project category">
+                        <option value="all">All categories</option>
+                        <option value="developer">Developer tools</option>
+                        <option value="documents">Document tools</option>
+                        <option value="creative">Creative tools</option>
+                        <option value="productivity">Productivity</option>
+                    </select>
+
+                    <select id="sortFilter" aria-label="Sort projects">
+                        <option value="featured">Featured projects</option>
+                        <option value="az">Name: A–Z</option>
+                        <option value="za">Name: Z–A</option>
+                    </select>
+
+                </div>
+
+                <button class="btn btn-dark studio-submit"
+                        id="studioSubmit">
+
+                    <svg class="icon"><use href="#i-sparkle"/></svg>
+                    <span>Discover projects</span>
+
+                </button>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================
+     FEATURED PROJECTS
+====================================== -->
+
+<section class="featured" id="projects">
+
+    <div class="container">
+
+        <div class="featured-header reveal">
+
+            <div class="eyebrow">Selected work / 01</div>
+
+            <h2>Featured digital<br>products.</h2>
+
+            <p class="subtitle">
+                Practical tools, thoughtful interfaces and experiments
+                designed around real-world workflows.
+            </p>
+
+            <div class="mini-products">
+
+                <div class="mini-icons" aria-hidden="true">
+                    <span style="background:#b9d7bd">G</span>
+                    <span style="background:#ecc6ad">P</span>
+                    <span style="background:#c5b9ed">M</span>
+                    <span style="background:#eadcb0">S</span>
+                    <span style="background:#b8d9db">I</span>
+                </div>
+
+                <span>Part of the LadeStack ecosystem</span>
+
+            </div>
+
+        </div>
+
+        <div class="carousel reveal"
+             aria-label="Featured projects carousel"
+             aria-roledescription="carousel">
+
+            <button class="icon-button carousel-prev"
+                    id="prevProject"
+                    aria-label="Previous project">
+                <svg class="icon"><use href="#i-left"/></svg>
+            </button>
+
+            <div class="carousel-track"
+                 id="projectTrack"
+                 aria-live="polite">
+            </div>
+
+            <button class="icon-button carousel-next"
+                    id="nextProject"
+                    aria-label="Next project">
+                <svg class="icon"><use href="#i-right"/></svg>
+            </button>
+
+        </div>
+
+        <div class="carousel-dots"
+             id="carouselDots"
+             aria-label="Select a featured project">
+        </div>
+
+        <div class="center">
+
+            <a href="https://ladestack.in/apps"
+               class="btn btn-dark"
+               target="_blank"
+               rel="noopener noreferrer">
+                Discover all products
+                <svg class="icon"><use href="#i-external"/></svg>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================
+     EXPERTISE
+====================================== -->
+
+<section class="feature-section" id="expertise">
+
+    <div class="container">
+
+        <div class="center reveal">
+
+            <h2>What do I bring to the table?</h2>
+
+            <p class="subtitle">
+                Where design thinking meets hands-on software engineering.
+            </p>
+
+        </div>
+
+        <div class="feature-grid reveal">
+
+            <article class="feature">
+
+                <div class="feature-top">
+                    <span class="feature-index">01.</span>
+                    <span class="feature-symbol">
+                        <svg class="icon"><use href="#i-design"/></svg>
+                    </span>
+                </div>
+
+                <h3>Thoughtful UI/UX design</h3>
+
+                <p>
+                    Clear visual hierarchy, purposeful interactions and
+                    responsive layouts that make complex tools easier
+                    to understand and use.
+                </p>
+
+            </article>
+
+            <article class="feature">
+
+                <div class="feature-top">
+                    <span class="feature-index">02.</span>
+                    <span class="feature-symbol">
+                        <svg class="icon"><use href="#i-code"/></svg>
+                    </span>
+                </div>
+
+                <h3>Full-stack development</h3>
+
+                <p>
+                    Building modern applications across frontend
+                    architecture, backend integrations, authentication
+                    and practical data workflows.
+                </p>
+
+            </article>
+
+            <article class="feature">
+
+                <div class="feature-top">
+                    <span class="feature-index">03.</span>
+                    <span class="feature-symbol">
+                        <svg class="icon"><use href="#i-shield"/></svg>
+                    </span>
+                </div>
+
+                <h3>Privacy-conscious software</h3>
+
+                <p>
+                    Exploring local-first processing and browser-native
+                    functionality to reduce unnecessary uploads and
+                    give users more control.
+                </p>
+
+            </article>
+
+            <article class="feature">
+
+                <div class="feature-top">
+                    <span class="feature-index">04.</span>
+                    <span class="feature-symbol">
+                        <svg class="icon"><use href="#i-sparkle"/></svg>
+                    </span>
+                </div>
+
+                <h3>AI-assisted innovation</h3>
+
+                <p>
+                    Experimenting with AI coding agents, multi-model
+                    workflows and provider-independent integrations
+                    to improve software development.
+                </p>
+
+            </article>
+
+            <article class="feature">
+
+                <div class="feature-top">
+                    <span class="feature-index">05.</span>
+                    <span class="feature-symbol">
+                        <svg class="icon"><use href="#i-terminal"/></svg>
+                    </span>
+                </div>
+
+                <h3>Browser-native developer tools</h3>
+
+                <p>
+                    Creating development environments, code
+                    playgrounds and utilities that help people move
+                    from ideas to implementation with less setup.
+                </p>
+
+            </article>
+
+            <article class="feature">
+
+                <div class="feature-top">
+                    <span class="feature-index">06.</span>
+                    <span class="feature-symbol">
+                        <svg class="icon"><use href="#i-bolt"/></svg>
+                    </span>
+                </div>
+
+                <h3>Performance and accessibility</h3>
+
+                <p>
+                    Prioritizing understandable interfaces, semantic
+                    structure, efficient loading and predictable
+                    experiences across different screen sizes.
+                </p>
+
+            </article>
+
+        </div>
+
+        <div class="workflow-strip reveal">
+
+            <span>My process —</span>
+
+            <span>
+                <svg class="icon"><use href="#i-search"/></svg>
+                Research
+            </span>
+
+            <span>
+                <svg class="icon"><use href="#i-design"/></svg>
+                Design
+            </span>
+
+            <span>
+                <svg class="icon"><use href="#i-code"/></svg>
+                Development
+            </span>
+
+            <span>
+                <svg class="icon"><use href="#i-layers"/></svg>
+                Testing
+            </span>
+
+            <span>
+                <svg class="icon"><use href="#i-globe"/></svg>
+                Deployment
+            </span>
+
+            <span>
+                <svg class="icon"><use href="#i-refresh"/></svg>
+                Iteration
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================
+     LADESTACK ECOSYSTEM
+====================================== -->
+
+<section class="ecosystem-section" id="ecosystem">
+
+    <div class="container reveal">
+
+        <div class="ecosystem">
+
+            <div class="ecosystem-copy">
+
+                <div class="eyebrow">Built with purpose</div>
+
+                <h2>
+                    A growing ecosystem of useful digital tools.
+                </h2>
+
+                <p>
+                    LadeStack is my independent product initiative
+                    focused on making powerful software more
+                    approachable. From browser-based coding to
+                    document processing and creative utilities,
+                    every product starts with a practical problem
+                    worth solving.
+                </p>
+
+                <a href="https://ladestack.in/"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="btn btn-light">
+                    Visit LadeStack
+                    <svg class="icon"><use href="#i-external"/></svg>
+                </a>
+
+            </div>
+
+            <div class="ecosystem-widgets">
+
+                <article class="ecosystem-widget"
+                         style="--offset:0px;--widget-color:#c7dfef">
+
+                    <div class="widget-header">
+
+                        <span class="widget-icon">&lt;/&gt;</span>
+
+                        <div>
+                            <strong>GB Coder</strong>
+                            <small>Browser-based development studio</small>
+                        </div>
+
+                        <a href="https://code.ladestack.in/"
+                           class="widget-link"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           aria-label="Open GB Coder">
+                            <svg class="icon"><use href="#i-external"/></svg>
+                        </a>
+
+                    </div>
+
+                    <p class="widget-description">
+                        Create, edit and preview web projects in the browser.
+                    </p>
+
+                    <div class="widget-wave" aria-hidden="true"></div>
+
+                </article>
+
+                <article class="ecosystem-widget"
+                         style="--offset:15px;--widget-color:#dbe6b9">
+
+                    <div class="widget-header">
+
+                        <span class="widget-icon">PDF</span>
+
+                        <div>
+                            <strong>LS PDF</strong>
+                            <small>Document processing utilities</small>
+                        </div>
+
+                        <a href="https://pdf.ladestack.in/"
+                           class="widget-link"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           aria-label="Open LS PDF">
+                            <svg class="icon"><use href="#i-external"/></svg>
+                        </a>
+
+                    </div>
+
+                    <div class="widget-wave" aria-hidden="true"></div>
+
+                </article>
+
+                <article class="ecosystem-widget"
+                         style="--offset:28px;--widget-color:#f4d3b2">
+
+                    <div class="widget-header">
+
+                        <span class="widget-icon">M↓</span>
+
+                        <div>
+                            <strong>MD2PDF</strong>
+                            <small>Markdown publishing workflow</small>
+                        </div>
+
+                        <a href="https://md2pdf.ladestack.in/"
+                           class="widget-link"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           aria-label="Open MD2PDF">
+                            <svg class="icon"><use href="#i-external"/></svg>
+                        </a>
+
+                    </div>
+
+                    <div class="widget-wave" aria-hidden="true"></div>
+
+                </article>
+
+                <article class="ecosystem-widget"
+                         style="--offset:42px;--widget-color:#dfcef4">
+
+                    <div class="widget-header">
+
+                        <span class="widget-icon">IMG</span>
+
+                        <div>
+                            <strong>LS Image Compressor</strong>
+                            <small>Browser-based image optimization</small>
+                        </div>
+
+                        <a href="https://img.ladestack.in/"
+                           class="widget-link"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           aria-label="Open image compressor">
+                            <svg class="icon"><use href="#i-external"/></svg>
+                        </a>
+
+                    </div>
+
+                    <div class="widget-wave" aria-hidden="true"></div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================
+     TECHNOLOGY STACK
+====================================== -->
+
+<section class="technology" id="technology">
+
+    <div class="container">
+
+        <div class="center reveal">
+
+            <h2>Technologies, languages and tools I explore</h2>
+
+            <p class="subtitle">
+                Choosing the right tools for the problem,
+                not the other way around.
+            </p>
+
+        </div>
+
+        <div class="technology-grid reveal">
+
+            <div class="tech-item">
+                <span class="tech-logo" style="--tech-color:#e34f26">H5</span>
+                HTML5
+                <span class="tech-category">Markup</span>
+            </div>
+
+            <div class="tech-item">
+                <span class="tech-logo" style="--tech-color:#1572b6">CSS</span>
+                CSS3
+                <span class="tech-category">Styling</span>
+            </div>
+
+            <div class="tech-item">
+                <span class="tech-logo" style="--tech-color:#ad8700">JS</span>
+                JavaScript
+                <span class="tech-category">Language</span>
+            </div>
+
+            <div class="tech-item">
+                <span class="tech-logo" style="--tech-color:#3178c6">TS</span>
+                TypeScript
+                <span class="tech-category">Language</span>
+            </div>
+
+            <div class="tech-item">
+                <span class="tech-logo" style="--tech-color:#1596b3">⚛</span>
+                React
+                <span class="tech-category">Frontend</span>
+            </div>
+
+            <div class="tech-item">
+                <span class="tech-logo" style="--tech-color:#333">A</span>
+                Astro
+                <span class="tech-category">Framework</span>
+            </div>
+
+            <div class="tech-item">
+                <span class="tech-logo" style="--tech-color:#43853d">N</span>
+                Node.js
+                <span class="tech-category">Runtime</span>
+            </div>
+
+            <div class="tech-item">
+                <span class="tech-logo" style="--tech-color:#7950ee">V</span>
+                Vite
+                <span class="tech-category">Build tools</span>
+            </div>
+
+            <div class="tech-item">
+                <span class="tech-logo" style="--tech-color:#0891b2">TW</span>
+                Tailwind CSS
+                <span class="tech-category">Styling</span>
+            </div>
+
+            <div class="tech-item">
+                <span class="tech-logo" style="--tech-color:#e06c55">F</span>
+                Figma
+                <span class="tech-category">Design</span>
+            </div>
+
+            <div class="tech-item">
+                <span class="tech-logo" style="--tech-color:#f05032">Git</span>
+                Git
+                <span class="tech-category">Version control</span>
+            </div>
+
+            <div class="tech-item">
+                <span class="tech-logo" style="--tech-color:#202020">GH</span>
+                GitHub
+                <span class="tech-category">Development</span>
+            </div>
+
+            <div class="tech-item">
+                <span class="tech-logo" style="--tech-color:#49956d">DB</span>
+                IndexedDB
+                <span class="tech-category">Local storage</span>
+            </div>
+
+            <div class="tech-item">
+                <span class="tech-logo" style="--tech-color:#316bab">M</span>
+                Monaco Editor
+                <span class="tech-category">Code editor</span>
+            </div>
+
+            <div class="tech-item">
+                <span class="tech-logo" style="--tech-color:#6b42bd">WC</span>
+                WebContainers
+                <span class="tech-category">Browser runtime</span>
+            </div>
+
+            <div class="tech-item">
+                <span class="tech-logo" style="--tech-color:#777">AI</span>
+                AI Coding Agents
+                <span class="tech-category">Development</span>
+            </div>
+
+            <div class="tech-item">
+                <span class="tech-logo" style="--tech-color:#141414">▲</span>
+                Vercel
+                <span class="tech-category">Deployment</span>
+            </div>
+
+            <div class="tech-item">
+                <span class="tech-logo" style="--tech-color:#9569ce">API</span>
+                REST APIs
+                <span class="tech-category">Integration</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================
+     ABOUT AND PHILOSOPHY
+====================================== -->
+
+<section class="philosophy" id="about">
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <div>
+                <div class="eyebrow">Behind the products</div>
+                <h2>How I think about building.</h2>
+            </div>
+
+            <p>
+                Engineer by training. Product builder by choice.
+                These are the principles that guide my work.
+            </p>
+
+        </div>
+
+        <div class="philosophy-grid reveal">
+
+            <article class="philosophy-card">
+
+                <div class="quote-mark" aria-hidden="true">“</div>
+
+                <h3>Useful before complicated.</h3>
+
+                <p>
+                    I believe the best software solves a meaningful
+                    problem without introducing unnecessary
+                    complexity. Every interface and feature should
+                    have a clear purpose.
+                </p>
+
+                <div class="philosophy-author">
+
+                    <span class="author-icon"
+                          style="--author-color:#c9ddd7">01</span>
+
+                    <div>
+                        <strong>Product thinking</strong>
+                        <small>My design philosophy</small>
+                    </div>
+
+                </div>
+
+            </article>
+
+            <article class="philosophy-card">
+
+                <div class="quote-mark" aria-hidden="true">“</div>
+
+                <h3>Design with intention.</h3>
+
+                <p>
+                    Whitespace, typography, motion and color are not
+                    decoration alone. They help establish hierarchy,
+                    improve comprehension and create a more
+                    comfortable user experience.
+                </p>
+
+                <div class="philosophy-author">
+
+                    <span class="author-icon"
+                          style="--author-color:#e9d4bf">02</span>
+
+                    <div>
+                        <strong>Creative direction</strong>
+                        <small>My approach to interfaces</small>
+                    </div>
+
+                </div>
+
+            </article>
+
+            <article class="philosophy-card">
+
+                <div class="quote-mark" aria-hidden="true">“</div>
+
+                <h3>Always keep exploring.</h3>
+
+                <p>
+                    My Mechanical Engineering background shaped
+                    the way I solve problems. Curiosity about software,
+                    design and new technologies continues to
+                    influence the products I build today.
+                </p>
+
+                <div class="philosophy-author">
+
+                    <span class="author-icon"
+                          style="--author-color:#d9cfee">03</span>
+
+                    <div>
+                        <strong>Engineering mindset</strong>
+                        <small>My approach to learning</small>
+                    </div>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================
+     FAQ
+====================================== -->
+
+<section class="faq-section" id="faq">
+
+    <div class="container faq-layout">
+
+        <div class="faq-intro reveal">
+
+            <div class="eyebrow">A little more about me</div>
+
+            <h2>
+                Frequently<br>
+                Asked Questions
+            </h2>
+
+            <p>
+                More information about my background,
+                products and development approach.
+            </p>
+
+        </div>
+
+        <div class="faq-list reveal">
+
+            <details class="faq-item">
+
+                <summary>
+                    Who is Girish Lade?
+                    <span class="faq-indicator">
+                        <svg class="icon"><use href="#i-plus"/></svg>
+                    </span>
+                </summary>
+
+                <div class="faq-answer">
+                    I'm Girish Balaso Lade, an independent UI/UX designer,
+                    full-stack developer and product builder based in
+                    Pune, India. I am the founder of LadeStack, an
+                    ecosystem of browser-first developer and productivity tools.
+                </div>
+
+            </details>
+
+            <details class="faq-item">
+
+                <summary>
+                    What is LadeStack?
+                    <span class="faq-indicator">
+                        <svg class="icon"><use href="#i-plus"/></svg>
+                    </span>
+                </summary>
+
+                <div class="faq-answer">
+                    LadeStack is my independent product initiative
+                    bringing together software tools for coding,
+                    documents, images and everyday productivity.
+                    Visit <a href="https://ladestack.in/"
+                    target="_blank" rel="noopener noreferrer">ladestack.in</a>
+                    to explore the ecosystem.
+                </div>
+
+            </details>
+
+            <details class="faq-item">
+
+                <summary>
+                    What type of products do you build?
+                    <span class="faq-indicator">
+                        <svg class="icon"><use href="#i-plus"/></svg>
+                    </span>
+                </summary>
+
+                <div class="faq-answer">
+                    My main areas of interest are browser-based developer
+                    environments, modern web applications, local-first
+                    document tools, creative utilities and AI-assisted
+                    development workflows.
+                </div>
+
+            </details>
+
+            <details class="faq-item">
+
+                <summary>
+                    What is your educational background?
+                    <span class="faq-indicator">
+                        <svg class="icon"><use href="#i-plus"/></svg>
+                    </span>
+                </summary>
+
+                <div class="faq-answer">
+                    My academic foundation is in Mechanical Engineering.
+                    That background influenced my systems-oriented
+                    approach to solving problems and eventually led
+                    to my interest in software engineering and
+                    digital product design.
+                </div>
+
+            </details>
+
+            <details class="faq-item">
+
+                <summary>
+                    What is GB Coder?
+                    <span class="faq-indicator">
+                        <svg class="icon"><use href="#i-plus"/></svg>
+                    </span>
+                </summary>
+
+                <div class="faq-answer">
+                    GB Coder is a browser-based coding studio designed
+                    for creating and previewing web projects. Its
+                    development direction includes Monaco-based
+                    editing and WebContainer-powered workflows,
+                    which are still being improved.
+                </div>
+
+            </details>
+
+            <details class="faq-item">
+
+                <summary>
+                    Can I explore your source code?
+                    <span class="faq-indicator">
+                        <svg class="icon"><use href="#i-plus"/></svg>
+                    </span>
+                </summary>
+
+                <div class="faq-answer">
+                    Yes. You can browse my public repositories,
+                    product experiments and available source code on
+                    <a href="https://github.com/girishlade111"
+                       target="_blank"
+                       rel="noopener noreferrer">GitHub</a>.
+                    Usage permissions depend on each repository's license.
+                </div>
+
+            </details>
+
+            <details class="faq-item">
+
+                <summary>
+                    Why do you focus on browser-first tools?
+                    <span class="faq-indicator">
+                        <svg class="icon"><use href="#i-plus"/></svg>
+                    </span>
+                </summary>
+
+                <div class="faq-answer">
+                    Browser-first applications can reduce setup
+                    requirements and make software more accessible.
+                    Where appropriate, client-side processing can
+                    also reduce the need to send personal files to
+                    external servers.
+                </div>
+
+            </details>
+
+            <details class="faq-item">
+
+                <summary>
+                    How do you use AI in development?
+                    <span class="faq-indicator">
+                        <svg class="icon"><use href="#i-plus"/></svg>
+                    </span>
+                </summary>
+
+                <div class="faq-answer">
+                    I explore AI agents for research, implementation,
+                    refactoring, debugging and documentation.
+                    Architecture, testing, verification and responsible
+                    design remain important parts of the process.
+                </div>
+
+            </details>
+
+            <details class="faq-item">
+
+                <summary>
+                    Are your products free to use?
+                    <span class="faq-indicator">
+                        <svg class="icon"><use href="#i-plus"/></svg>
+                    </span>
+                </summary>
+
+                <div class="faq-answer">
+                    My focus is on making useful tools accessible
+                    without unnecessary costs. Individual product
+                    features, limits and pricing may vary as the
+                    ecosystem evolves. Check the relevant product
+                    website for current details.
+                </div>
+
+            </details>
+
+            <details class="faq-item">
+
+                <summary>
+                    How can I get in touch with you?
+                    <span class="faq-indicator">
+                        <svg class="icon"><use href="#i-plus"/></svg>
+                    </span>
+                </summary>
+
+                <div class="faq-answer">
+                    You can email me at
+                    <a href="mailto:admin@ladestack.in">
+                        admin@ladestack.in
+                    </a>
+                    or connect through my GitHub and LinkedIn profiles.
+                    I'm interested in thoughtful product ideas,
+                    technical discussions and collaboration opportunities.
+                </div>
+
+            </details>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================
+     CONTACT CTA
+====================================== -->
+
+<section class="contact-section" id="contact">
+
+    <div class="container reveal">
+
+        <div class="contact-banner">
+
+            <div class="contact-copy">
+
+                <h2>
+                    Let's transform good ideas into meaningful software.
+                </h2>
+
+                <p>
+                    Have a product idea, an interesting technical problem
+                    or something worth building together?
+                </p>
+
+                <a href="mailto:admin@ladestack.in"
+                   class="btn btn-light">
+                    Get in touch
+                    <svg class="icon"><use href="#i-arrow"/></svg>
+                </a>
+
+                <div class="contact-meta">
+                    <span class="live-dot"></span>
+                    Independent product builder · India
+                </div>
+
+            </div>
+
+            <div class="contact-art" aria-hidden="true">
+                <i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+<!-- =====================================
+     FOOTER
+====================================== -->
+
+<footer class="footer">
+
+    <div class="container">
+
+        <div class="footer-grid">
+
+            <div class="footer-brand">
+
+                <a href="#home" class="logo">
+
+                    <span class="wave" aria-hidden="true">
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                    </span>
+
+                    Girish Lade
+
+                </a>
+
+                <p>
+                    Designing thoughtful experiences.
+                    Engineering useful software.
+                    Building independently with LadeStack.
+                </p>
+
+                <div class="footer-buttons">
+
+                    <a class="btn btn-dark"
+                       href="https://github.com/girishlade111"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        <svg class="icon"><use href="#i-github"/></svg>
+                        GitHub
+                    </a>
+
+                    <a class="btn btn-dark"
+                       href="https://ladestack.in/"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        <svg class="icon"><use href="#i-globe"/></svg>
+                        LadeStack
+                    </a>
+
+                </div>
+
+                <div class="social-links">
+
+                    <a href="https://github.com/girishlade111"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="GitHub">
+                        <svg class="icon"><use href="#i-github"/></svg>
+                    </a>
+
+                    <a href="https://www.linkedin.com/in/girish-lade/"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="LinkedIn">
+                        in
+                    </a>
+
+                    <a href="https://www.instagram.com/girish_lade_/"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Instagram">
+                        IG
+                    </a>
+
+                    <a href="https://codepen.io/Girish-Lade-the-looper"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="CodePen">
+                        CP
+                    </a>
+
+                    <a href="mailto:admin@ladestack.in"
+                       aria-label="Email">
+                        <svg class="icon"><use href="#i-mail"/></svg>
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="footer-column">
+
+                <h4>Portfolio</h4>
+
+                <a href="#home">Homepage</a>
+                <a href="#projects">Featured work</a>
+                <a href="#expertise">Expertise</a>
+                <a href="#about">About me</a>
+                <a href="#technology">Technology</a>
+                <a href="#studio">Project explorer</a>
+
+            </div>
+
+            <div class="footer-column">
+
+                <h4>Products</h4>
+
+                <a href="https://code.ladestack.in/">GB Coder</a>
+                <a href="https://pdf.ladestack.in/">LS PDF</a>
+                <a href="https://md2pdf.ladestack.in/">MD2PDF</a>
+                <a href="https://img.ladestack.in/">Image Compressor</a>
+                <a href="https://resume.ladestack.in/">Swift Resume</a>
+                <a href="https://land.ladestack.in/">Land Converter</a>
+
+            </div>
+
+            <div class="footer-column">
+
+                <h4>Resources</h4>
+
+                <a href="https://ladestack.in/">LadeStack</a>
+                <a href="https://ladestack.in/apps">Applications</a>
+                <a href="https://ladestack.in/docs">Documentation</a>
+                <a href="https://github.com/girishlade111?tab=repositories">
+                    Repositories
+                </a>
+                <a href="#faq">FAQs</a>
+
+            </div>
+
+            <div class="footer-column">
+
+                <h4>Connect</h4>
+
+                <a href="mailto:admin@ladestack.in">Email me</a>
+                <a href="https://github.com/girishlade111">GitHub</a>
+                <a href="https://www.linkedin.com/in/girish-lade/">LinkedIn</a>
+                <a href="https://www.instagram.com/girish_lade_/">Instagram</a>
+                <a href="https://codepen.io/Girish-Lade-the-looper">CodePen</a>
+                <a href="#contact">Let's collaborate</a>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            © <span id="currentYear">2026</span> Girish Balaso Lade
+            <span>·</span>
+            Designed and built with intention.
+        </div>
+
+    </div>
+
+    <div class="footer-art" aria-hidden="true">
+        <div class="footer-orb"></div>
+    </div>
+
+</footer>
+
+<button class="icon-button back-top"
+        id="backTop"
+        aria-label="Back to top">
+    <svg class="icon"><use href="#i-up"/></svg>
+</button>
+
+<!-- =====================================
+     JAVASCRIPT
+====================================== -->
+
+<script>
+
+"use strict";
+
+/* --------------------------------------
+   Project data
+-------------------------------------- */
+
+const projects = [
+    {
+        name: "LS PDF",
+        category: "documents",
+        label: "Document utilities",
+        description: "A browser-oriented toolkit for organizing, editing and converting PDF documents.",
+        url: "https://pdf.ladestack.in/",
+        icon: "file",
+        keywords: "pdf merge split compress document convert files",
+        gradient: `
+            radial-gradient(ellipse at 75% 30%, #f5e5a2 0%, transparent 55%),
+            radial-gradient(ellipse at 10% 50%, #e1b768 0%, transparent 65%),
+            radial-gradient(ellipse at 80% 90%, #fff8d9 0%, transparent 55%),
+            #e6d5a4
+        `
+    },
+    {
+        name: "GB Coder",
+        category: "developer",
+        label: "Developer workspace",
+        description: "A browser-based coding studio for editing, previewing and experimenting with web applications.",
+        url: "https://code.ladestack.in/",
+        icon: "code",
+        keywords: "code coding editor programming ide html css javascript react webcontainer browser development",
+        gradient: `
+            radial-gradient(ellipse at 60% 65%, #69a96f 0%, transparent 55%),
+            radial-gradient(ellipse at 10% 35%, #c5df91 0%, transparent 65%),
+            radial-gradient(ellipse at 75% 10%, #f1f4df 0%, transparent 65%),
+            #d2e6b9
+        `
+    },
+    {
+        name: "MD2PDF",
+        category: "documents",
+        label: "Publishing workflow",
+        description: "Transform Markdown and repository documentation into polished PDF documents and books.",
+        url: "https://md2pdf.ladestack.in/",
+        icon: "file",
+        keywords: "markdown documentation github readme pdf book export document",
+        gradient: `
+            radial-gradient(ellipse at 5% 15%, #e7a68b 0%, transparent 60%),
+            radial-gradient(ellipse at 95% 65%, #94abd5 0%, transparent 60%),
+            radial-gradient(ellipse at 80% 5%, #efe6b0 0%, transparent 50%),
+            #dcd2e4
+        `
+    },
+    {
+        name: "Swift Resume",
+        category: "productivity",
+        label: "Career tools",
+        description: "Create structured professional resumes with an approachable editing workflow and PDF export.",
+        url: "https://resume.ladestack.in/",
+        icon: "user",
+        keywords: "resume cv job career professional pdf export",
+        gradient: `
+            radial-gradient(ellipse at 75% 30%, #f8e2b7, transparent 65%),
+            radial-gradient(ellipse at 20% 90%, #d6958d, transparent 70%),
+            #f1d4cc
+        `
+    },
+    {
+        name: "Image Compressor",
+        category: "creative",
+        label: "Creative utility",
+        description: "Resize, optimize and convert images using a privacy-conscious browser workflow.",
+        url: "https://img.ladestack.in/",
+        icon: "design",
+        keywords: "image photo picture compress resize optimize jpg png webp convert",
+        gradient: `
+            radial-gradient(ellipse at 30% 70%, #7bbfc2, transparent 65%),
+            radial-gradient(ellipse at 80% 20%, #f2e9c9, transparent 70%),
+            #b7d9da
+        `
+    },
+    {
+        name: "Bharat Land Converter",
+        category: "productivity",
+        label: "Regional utility",
+        description: "Explore standard and regional Indian land-area measurement units in one interface.",
+        url: "https://land.ladestack.in/",
+        icon: "globe",
+        keywords: "land area acre hectare guntha measurement conversion india",
+        gradient: `
+            radial-gradient(ellipse at 20% 30%, #c4d3aa, transparent 65%),
+            radial-gradient(ellipse at 80% 80%, #d2ac78, transparent 65%),
+            #e5dfc4
+        `
+    },
+    {
+        name: "GameHub",
+        category: "creative",
+        label: "Interactive experiments",
+        description: "Explore a collection of small browser games and interactive creative experiments.",
+        url: "https://games-ladestack.vercel.app/",
+        icon: "grid",
+        keywords: "games gaming play javascript browser interactive",
+        gradient: `
+            radial-gradient(ellipse at 10% 20%, #b6a5e7, transparent 65%),
+            radial-gradient(ellipse at 80% 75%, #e3a7bd, transparent 70%),
+            #dce0f3
+        `
+    },
+    {
+        name: "LadeStack",
+        category: "developer",
+        label: "Independent ecosystem",
+        description: "Discover a growing collection of developer utilities, documentation and practical digital products.",
+        url: "https://ladestack.in/",
+        icon: "layers",
+        keywords: "ladestack platform ecosystem developer tools apps documentation",
+        gradient: `
+            radial-gradient(ellipse at 80% 20%, #b0ace4, transparent 65%),
+            radial-gradient(ellipse at 20% 85%, #9fbde5, transparent 65%),
+            #e4d9f4
+        `
+    }
+];
+
+const icon = name =>
+    `<svg class="icon" aria-hidden="true"><use href="#i-${name}"/></svg>`;
+
+
+/* --------------------------------------
+   Hero animation controls
+-------------------------------------- */
+
+const heroVisual = document.getElementById("heroVisual");
+const artToggle = document.getElementById("artToggle");
+const artStatus = document.getElementById("artStatus");
+
+artToggle.addEventListener("click", () => {
+
+    const paused = heroVisual.classList.toggle("paused");
+
+    artToggle.innerHTML = icon(paused ? "play" : "pause");
+
+    artToggle.setAttribute(
+        "aria-label",
+        paused ? "Play artwork animation" : "Pause artwork animation"
+    );
+
+    artToggle.setAttribute("aria-pressed", String(paused));
+
+    artStatus.textContent = paused
+        ? "Artwork animation paused"
+        : "An animated study in color and rhythm";
+});
+
+
+/* --------------------------------------
+   Project carousel
+-------------------------------------- */
+
+const projectTrack = document.getElementById("projectTrack");
+const carouselDots = document.getElementById("carouselDots");
+
+let activeProject = 1;
+
+function makeWave(count = 38, maximum = 75) {
+
+    return Array.from({ length: count }, (_, i) => {
+
+        const variation = Math.abs(
+            Math.sin(i * 1.73) * Math.cos(i * .41)
+        );
+
+        const height = 7 + variation * maximum;
+
+        return `
+            <i style="
+                --wave-height:${height.toFixed(1)}px;
+                --wave-delay:${(-i * .075).toFixed(2)}s
+            "></i>
+        `;
+
+    }).join("");
+}
+
+function renderCarousel() {
+
+    const total = projects.length;
+
+    const indices = [
+        (activeProject - 1 + total) % total,
+        activeProject,
+        (activeProject + 1) % total
+    ];
+
+    projectTrack.innerHTML = indices.map((index, position) => {
+
+        const project = projects[index];
+        const center = position === 1;
+
+        return `
+            <article
+                class="project-card ${center ? "is-center" : ""}"
+                style="--card-gradient:${project.gradient}"
+                aria-label="${project.name}">
+
+                <div>
+                    <div class="card-category">
+                        ${project.label}
+                    </div>
+
+                    <h3>${project.name}</h3>
+                </div>
+
+                <div class="card-art">
+
+                    <div class="project-waveform" aria-hidden="true">
+                        ${makeWave(center ? 39 : 25, center ? 78 : 43)}
+
+                        <a class="card-open"
+                           href="${project.url}"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           tabindex="0"
+                           aria-label="Visit ${project.name}">
+                            ${icon("external")}
+                        </a>
+                    </div>
+
+                </div>
+
+                <div>
+
+                    <p>${project.description}</p>
+
+                    <div class="card-footer">
+
+                        <a href="${project.url}"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            Explore product
+                            ${icon("arrow")}
+                        </a>
+
+                        <span>
+                            ${String(index + 1).padStart(2, "0")}
+                            /
+                            ${String(total).padStart(2, "0")}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </article>
+        `;
+
+    }).join("");
+
+    carouselDots.innerHTML = projects.map((project, index) => `
+        <button
+            class="${index === activeProject ? "active" : ""}"
+            data-index="${index}"
+            aria-label="Show ${project.name}"
+            aria-current="${index === activeProject ? "true" : "false"}">
+        </button>
+    `).join("");
+}
+
+function moveCarousel(direction) {
+
+    activeProject = (
+        activeProject + direction + projects.length
+    ) % projects.length;
+
+    renderCarousel();
+}
+
+document.getElementById("prevProject")
+    .addEventListener("click", () => moveCarousel(-1));
+
+document.getElementById("nextProject")
+    .addEventListener("click", () => moveCarousel(1));
+
+carouselDots.addEventListener("click", event => {
+
+    const button = event.target.closest("[data-index]");
+
+    if (!button) return;
+
+    activeProject = Number(button.dataset.index);
+
+    renderCarousel();
+
+    carouselDots.querySelector(
+        `[data-index="${activeProject}"]`
+    )?.focus();
+});
+
+let touchStart = 0;
+
+projectTrack.addEventListener("touchstart", event => {
+    touchStart = event.changedTouches[0].screenX;
+}, { passive: true });
+
+projectTrack.addEventListener("touchend", event => {
+
+    const delta = event.changedTouches[0].screenX - touchStart;
+
+    if (Math.abs(delta) > 55) {
+        moveCarousel(delta < 0 ? 1 : -1);
+    }
+
+}, { passive: true });
+
+renderCarousel();
+
+
+/* --------------------------------------
+   Interactive project explorer
+-------------------------------------- */
+
+const studioContent = document.getElementById("studioContent");
+const studioOptions = document.getElementById("studioOptions");
+const studioSubmit = document.getElementById("studioSubmit");
+const exampleButton = document.getElementById("exampleButton");
+const resetFinder = document.getElementById("resetFinder");
+const categoryFilter = document.getElementById("categoryFilter");
+const sortFilter = document.getElementById("sortFilter");
+
+let currentTab = "projects";
+let savedQuery = "";
+
+const examples = [
+    "Find a tool for editing PDF files",
+    "I want to build a website",
+    "Compress an image",
+    "Create a professional resume",
+    "Explore Markdown publishing"
+];
+
+function renderStudio(tab) {
+
+    currentTab = tab;
+
+    document.querySelectorAll(".studio-tab").forEach(button => {
+
+        const active = button.dataset.tab === tab;
+
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-pressed", String(active));
+    });
+
+    studioOptions.style.display =
+        tab === "projects" ? "flex" : "none";
+
+    exampleButton.style.display =
+        tab === "projects" ? "inline-flex" : "none";
+
+    resetFinder.style.display =
+        tab === "projects" ? "inline-flex" : "none";
+
+    if (tab === "projects") {
+
+        studioContent.innerHTML = `
+            <textarea id="projectQuery"
+                aria-label="Describe the project or tool you want to find"
+                placeholder="Describe what you want to build or explore..."></textarea>
+
+            <div class="prompt-chips">
+                <button class="prompt-chip" data-query="code editor">
+                    Code editor
+                </button>
+                <button class="prompt-chip" data-query="PDF">
+                    PDF tools
+                </button>
+                <button class="prompt-chip" data-query="image">
+                    Image tools
+                </button>
+                <button class="prompt-chip" data-query="resume">
+                    Resume builder
+                </button>
+            </div>
+
+            <div id="finderResults"
+                 class="finder-results"
+                 aria-live="polite"></div>
+        `;
+
+        const query = document.getElementById("projectQuery");
+
+        query.value = savedQuery;
+
+        query.addEventListener("input", () => {
+            savedQuery = query.value;
+        });
+
+        query.addEventListener("keydown", event => {
+
+            if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                findProjects();
+            }
+        });
+
+        studioSubmit.innerHTML = `
+            ${icon("sparkle")}
+            <span>Discover projects</span>
+        `;
+
+    } else if (tab === "profile") {
+
+        studioContent.innerHTML = `
+            <div class="profile-preview">
+
+                <div class="panel-avatar">GL</div>
+
+                <h3>Engineer by training.<br>Builder by choice.</h3>
+
+                <p>
+                    I'm Girish Balaso Lade, a UI/UX designer,
+                    full-stack developer and founder of LadeStack.
+                    My work brings together software engineering,
+                    creative design and practical product development.
+                </p>
+
+                <div class="prompt-chips">
+                    <span class="prompt-chip">UI/UX Design</span>
+                    <span class="prompt-chip">Development</span>
+                    <span class="prompt-chip">Product Engineering</span>
+                </div>
+
+            </div>
+        `;
+
+        studioSubmit.innerHTML = `
+            ${icon("user")}
+            <span>Read more about me</span>
+        `;
+
+    } else {
+
+        studioContent.innerHTML = `
+            <div class="profile-preview">
+
+                <div class="panel-avatar">
+                    ${icon("mail")}
+                </div>
+
+                <h3>Let's build something useful.</h3>
+
+                <p>
+                    Have an idea, a technical question or feedback
+                    about one of my projects? You can reach me
+                    directly at admin@ladestack.in.
+                </p>
+
+                <div class="prompt-chips">
+
+                    <a class="prompt-chip"
+                       href="https://github.com/girishlade111"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        GitHub ↗
+                    </a>
+
+                    <a class="prompt-chip"
+                       href="https://www.linkedin.com/in/girish-lade/"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        LinkedIn ↗
+                    </a>
+
+                </div>
+
+            </div>
+        `;
+
+        studioSubmit.innerHTML = `
+            ${icon("mail")}
+            <span>Send an email</span>
+        `;
+    }
+}
+
+function findProjects() {
+
+    const queryField = document.getElementById("projectQuery");
+    const resultsContainer = document.getElementById("finderResults");
+
+    if (!queryField || !resultsContainer) return;
+
+    const query = queryField.value.toLowerCase().trim();
+
+    const category = categoryFilter.value;
+
+    const stopWords = new Set([
+        "i", "a", "an", "the", "to", "for", "of", "and",
+        "my", "me", "want", "need", "find", "show", "can",
+        "you", "with", "some", "please", "tool", "tools"
+    ]);
+
+    const words = query
+        .split(/[^a-z0-9]+/)
+        .filter(word => word && !stopWords.has(word));
+
+    let matches = projects
+        .filter(project =>
+            category === "all" || project.category === category
+        )
+        .map(project => {
+
+            const searchable = `
+                ${project.name}
+                ${project.label}
+                ${project.description}
+                ${project.keywords}
+            `.toLowerCase();
+
+            const score = words.reduce((total, word) => {
+                return total + (searchable.includes(word) ? 1 : 0);
+            }, 0);
+
+            return { ...project, score };
+
+        })
+        .filter(project => words.length === 0 || project.score > 0);
+
+    if (sortFilter.value === "az") {
+
+        matches.sort((a, b) => a.name.localeCompare(b.name));
+
+    } else if (sortFilter.value === "za") {
+
+        matches.sort((a, b) => b.name.localeCompare(a.name));
+
+    } else {
+
+        matches.sort((a, b) => b.score - a.score);
+    }
+
+    if (!matches.length) {
+
+        resultsContainer.innerHTML = `
+            <p style="font-size:12px;color:#777">
+                No matching projects. Try a broader keyword or
+                choose a different category.
+            </p>
+        `;
+
+        return;
+    }
+
+    resultsContainer.innerHTML = `
+        <p style="font-size:10px;color:#888">
+            ${matches.length}
+            matching ${matches.length === 1 ? "project" : "projects"}
+        </p>
+
+        ${matches.map(project => `
+            <a class="result-row"
+               href="${project.url}"
+               target="_blank"
+               rel="noopener noreferrer">
+
+                <span class="result-icon">
+                    ${icon(project.icon)}
+                </span>
+
+                <div>
+                    <strong>${project.name}</strong>
+                    <p>${project.description}</p>
+                </div>
+
+                ${icon("external")}
+
+            </a>
+        `).join("")}
+    `;
+}
+
+document.querySelectorAll(".studio-tab").forEach(button => {
+
+    button.addEventListener("click", () => {
+        renderStudio(button.dataset.tab);
+    });
+});
+
+studioContent.addEventListener("click", event => {
+
+    const button = event.target.closest("[data-query]");
+
+    if (!button) return;
+
+    const field = document.getElementById("projectQuery");
+
+    field.value = button.dataset.query;
+
+    savedQuery = field.value;
+
+    findProjects();
+});
+
+studioSubmit.addEventListener("click", () => {
+
+    if (currentTab === "projects") {
+
+        findProjects();
+
+    } else if (currentTab === "profile") {
+
+        document.getElementById("about").scrollIntoView({
+            behavior: "smooth"
+        });
+
+    } else {
+
+        window.location.href =
+            "mailto:admin@ladestack.in?subject=Hello%20from%20your%20portfolio";
+    }
+});
+
+exampleButton.addEventListener("click", () => {
+
+    const field = document.getElementById("projectQuery");
+
+    if (!field) return;
+
+    const example = examples[
+        Math.floor(Math.random() * examples.length)
+    ];
+
+    field.value = example;
+    savedQuery = example;
+
+    categoryFilter.value = "all";
+
+    findProjects();
+});
+
+resetFinder.addEventListener("click", () => {
+
+    savedQuery = "";
+
+    categoryFilter.value = "all";
+    sortFilter.value = "featured";
+
+    renderStudio("projects");
+
+    document.getElementById("projectQuery")?.focus();
+});
+
+categoryFilter.addEventListener("change", findProjects);
+sortFilter.addEventListener("change", findProjects);
+
+renderStudio("projects");
+
+
+/* --------------------------------------
+   Decorative widget waveforms
+-------------------------------------- */
+
+document.querySelectorAll(".widget-wave").forEach((wave, index) => {
+
+    wave.innerHTML = makeWave(100, 18 + index * 3);
+
+});
+
+
+/* --------------------------------------
+   Mobile navigation
+-------------------------------------- */
+
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+function closeMenu() {
+
+    navLinks.classList.remove("open");
+
+    menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.setAttribute("aria-label", "Open navigation");
+
+    menuToggle.innerHTML = icon("menu");
+}
+
+menuToggle.addEventListener("click", () => {
+
+    const open = navLinks.classList.toggle("open");
+
+    menuToggle.setAttribute("aria-expanded", String(open));
+
+    menuToggle.setAttribute(
+        "aria-label",
+        open ? "Close navigation" : "Open navigation"
+    );
+
+    menuToggle.innerHTML = icon(open ? "close" : "menu");
+});
+
+navLinks.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", closeMenu);
+});
+
+document.addEventListener("click", event => {
+
+    if (
+        !navLinks.contains(event.target) &&
+        !menuToggle.contains(event.target)
+    ) {
+        closeMenu();
+    }
+});
+
+document.addEventListener("keydown", event => {
+
+    if (
+        event.key === "Escape" &&
+        navLinks.classList.contains("open")
+    ) {
+        closeMenu();
+        menuToggle.focus();
+    }
+});
+
+
+/* --------------------------------------
+   FAQ accordion
+-------------------------------------- */
+
+const faqItems = document.querySelectorAll(".faq-item");
+
+faqItems.forEach(item => {
+
+    item.addEventListener("toggle", () => {
+
+        if (!item.open) return;
+
+        faqItems.forEach(other => {
+
+            if (other !== item) {
+                other.open = false;
+            }
+        });
+    });
+});
+
+
+/* --------------------------------------
+   Scroll reveal animations
+-------------------------------------- */
+
+const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+).matches;
+
+if ("IntersectionObserver" in window && !reducedMotion) {
+
+    document.body.classList.add("motion-ready");
+
+    const observer = new IntersectionObserver(entries => {
+
+        entries.forEach(entry => {
+
+            if (!entry.isIntersecting) return;
+
+            entry.target.classList.add("revealed");
+
+            observer.unobserve(entry.target);
+        });
+
+    }, {
+        threshold: .08,
+        rootMargin: "0px 0px -15px 0px"
+    });
+
+    document.querySelectorAll(".reveal").forEach(element => {
+
+        observer.observe(element);
+
+    });
+
+}
+
+
+/* --------------------------------------
+   Active navigation
+-------------------------------------- */
+
+const navigationAnchors = document.querySelectorAll(
+    ".nav-links a[href^='#']"
+);
+
+const watchedSections = Array.from(navigationAnchors)
+    .map(anchor => document.querySelector(
+        anchor.getAttribute("href")
+    ))
+    .filter(Boolean);
+
+const backTop = document.getElementById("backTop");
+
+function handleScroll() {
+
+    const position = window.scrollY;
+
+    backTop.classList.toggle("visible", position > 600);
+
+    let activeSection = "home";
+
+    watchedSections.forEach(section => {
+
+        if (section.getBoundingClientRect().top <= 160) {
+            activeSection = section.id;
+        }
+    });
+
+    navigationAnchors.forEach(anchor => {
+
+        const active =
+            anchor.getAttribute("href") === "#" + activeSection;
+
+        anchor.classList.toggle("active", active);
+
+        if (active) {
+            anchor.setAttribute("aria-current", "location");
+        } else {
+            anchor.removeAttribute("aria-current");
+        }
+    });
+}
+
+window.addEventListener("scroll", handleScroll, { passive: true });
+
+backTop.addEventListener("click", () => {
+
+    window.scrollTo({
+        top: 0,
+        behavior: reducedMotion ? "auto" : "smooth"
+    });
+});
+
+handleScroll();
+
+
+/* --------------------------------------
+   Automatic copyright year
+-------------------------------------- */
+
+document.getElementById("currentYear").textContent =
+    new Date().getFullYear();
+
+</script>
+
+</body>
+</html>
